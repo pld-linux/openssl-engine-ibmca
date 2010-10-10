@@ -1,20 +1,22 @@
 Summary:	IBMCA engine for OpenSSL
 Summary(pl.UTF-8):	Silnik IBMCA dla OpenSSL-a
 Name:		openssl-engine-ibmca
-Version:	1.0.0
+Version:	1.1
 Release:	1
 License:	OpenSSL (Apache-like)
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/opencryptoki/openssl-ibmca-%{version}.tar.bz2
-# Source0-md5:	403fb0544017ebf6c1c9bd2501015154
+Source0:	http://downloads.sourceforge.net/opencryptoki/openssl-ibmca-%{version}.tar.gz
+# Source0-md5:	c94f2b5cbef6c78eefa49d71d0f4b972
 URL:		http://opencryptoki.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.6.3
+BuildRequires:	libica-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	openssl-devel >= 0.9.8
-BuildRequires:	sed >= 4.0
-Requires:	libica = 1.3.8
+Requires:	libica >= 2.0
 Requires:	openssl >= 0.9.8
+# because of libica-2 usage
+ExclusiveArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,35 +30,28 @@ kryptograficznego IBM eServer Cryptographic Accelerator (ICA).
 %prep
 %setup -q -n openssl-ibmca-%{version}
 
-sed -i -e 's/"ica"/"libica-1.3.8.so"/' ica_openssl_api.h
-
 %build
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
 %configure \
-	ac_cv_lib_ica_icaOpenAdapter=yes \
-	--with-engines-dir=%{_libdir}/engines \
-	--with-openssl=/usr \
+	--libdir=%{_libdir}/engines
 	
-%{__make} \
-	libibmca_la_LIBADD=-lcrypto \
-	libibmca_la_DEPENDENCIES=
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	libibmca_la_DEPENDENCIES=
+	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/engines/libibmca.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/engines/libibmca.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README
+%doc README openssl.cnf.sample
 %attr(755,root,root) %{_libdir}/engines/libibmca.so*
