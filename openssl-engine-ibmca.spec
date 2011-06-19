@@ -1,12 +1,12 @@
 Summary:	IBMCA engine for OpenSSL
 Summary(pl.UTF-8):	Silnik IBMCA dla OpenSSL-a
 Name:		openssl-engine-ibmca
-Version:	1.1
+Version:	1.2.0
 Release:	1
 License:	OpenSSL (Apache-like)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/opencryptoki/openssl-ibmca-%{version}.tar.gz
-# Source0-md5:	c94f2b5cbef6c78eefa49d71d0f4b972
+# Source0-md5:	df14df18d276ab3106dffb8b7623896a
 URL:		http://opencryptoki.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.6.3
@@ -54,4 +54,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README openssl.cnf.sample
-%attr(755,root,root) %{_libdir}/engines/libibmca.so*
+%attr(755,root,root) %{_libdir}/engines/libibmca.so
