@@ -1,19 +1,19 @@
 Summary:	IBMCA engine for OpenSSL
 Summary(pl.UTF-8):	Silnik IBMCA dla OpenSSL-a
 Name:		openssl-engine-ibmca
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	OpenSSL (Apache-like)
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/opencryptoki/openssl-ibmca-%{version}.tar.gz
-# Source0-md5:	df14df18d276ab3106dffb8b7623896a
+Source0:	http://downloads.sourceforge.net/opencryptoki/openssl-ibmca-%{version}.tar.bz2
+# Source0-md5:	07a847cce7b3417d22598d83104b20f3
 URL:		http://opencryptoki.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1.6.3
-BuildRequires:	libica-devel >= 2.0
+BuildRequires:	libica-devel >= 2.4.0
 BuildRequires:	libtool
 BuildRequires:	openssl-devel >= 0.9.8
-Requires:	libica >= 2.0
+Requires:	libica >= 2.4.0
 Requires:	openssl >= 0.9.8
 # because of libica-2 usage
 ExclusiveArch:	s390 s390x
@@ -53,5 +53,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README openssl.cnf.sample
+%doc AUTHORS README src/openssl.cnf.sample
 %attr(755,root,root) %{_libdir}/engines/libibmca.so
+%{_mandir}/man5/ibmca.5*
